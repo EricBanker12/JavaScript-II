@@ -71,4 +71,7 @@ function removeDuplicates(array, cb) {
   // removeDuplicates removes all duplicate values from the given array.
   // Pass the duplicate free array to the callback function.
   // Do not mutate the original array.
+  let temp = []
+  array.forEach(e=>{if(!temp.includes(e)) temp.push(e)})
+  return cb(temp)
 }
