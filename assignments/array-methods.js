@@ -58,28 +58,41 @@ const runners = [
 // ==== Challenge 1: Use .forEach() ====
 // The event director needs both the first and last names of each runner for their running bibs. Combine both the first and last names and populate a new array called `fullNames`. This array will contain just strings.
 let fullNames = [];
+runners.forEach(runner=>fullNames.push(`${runner.first_name} ${runner.last_name}`))
 console.log(fullNames);
 
 // ==== Challenge 2: Use .map() ====
 // The event director needs to have all the runners' first names in uppercase because the director BECAME DRUNK WITH POWER. Populate an array called `firstNamesAllCaps`. This array will contain just strings.
-let firstNamesAllCaps = [];
+let firstNamesAllCaps = runners.map(runner=>runner.first_name.toUpperCase())
 console.log(firstNamesAllCaps);
 
 // ==== Challenge 3: Use .filter() ====
 // The large shirts won't be available for the event due to an ordering issue. We need a filtered version of the runners array, containing only those runners with large sized shirts so they can choose a different size. This will be an array of objects.
-let runnersLargeSizeShirt = [];
+let runnersLargeSizeShirt = runners.filter(runner=>runner.shirt_size=='L')
 console.log(runnersLargeSizeShirt);
 
 // ==== Challenge 4: Use .reduce() ====
 // The donations need to be tallied up and reported for tax purposes. Add up all the donations and save the total into a ticketPriceTotal variable.
-let ticketPriceTotal = 0;
+let ticketPriceTotal = runners.reduce((acc, runner)=>acc+runner.donation, 0)
 console.log(ticketPriceTotal);
 
 // ==== Challenge 5: Be Creative ====
 // Now that you have used .forEach(), .map(), .filter(), and .reduce().  I want you to think of potential problems you could solve given the data set and the 5k fun run theme.  Try to create and then solve 3 unique problems using one or many of the array methods listed above.
 
 // Problem 1
+// We need to email all the runners, generate a string containing a comma (,) separated list of runner emails that can be pasted into the email client.
+let emailList = runners.reduce((acc, runner)=>acc?acc+', '+runner.email:runner.email, '')
+console.log(emailList)
 
 // Problem 2
+// We need a list of all the involved companies. Pretend it is possible 1 company may have multiple runners, in which case, such company should still only be listed once.
+let companiesList = []
+runners.forEach(runner=>{
+    if (!companiesList.includes(runner.company_name)) companiesList.push(runner.company_name)
+})
+console.log(companiesList)
 
 // Problem 3
+// For the appreciation letters, We need a list of company names and donations sorted by donation amount (largest to smallest).
+let sortedByDonation = runners.slice(0).sort((a,b)=>b.donation-a.donation).map(runner=>`${runner.company_name}: ${runner.donation}`)
+console.log(sortedByDonation)
